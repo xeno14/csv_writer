@@ -1,9 +1,3 @@
-# csv_writer
-csv writing interface for iterator, range and various arguments
-
-# example
-
-```example.cpp
 #include "csv_writer.h"
 
 #include <iostream>
@@ -27,4 +21,3 @@ int main() {
 
   return 0;
 }
-```
