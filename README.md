@@ -3,7 +3,7 @@ csv writing interface for iterator, range and various arguments
 
 # example
 
-```example.cpp
+```cpp
 #include "csv_writer.h"
 
 #include <iostream>
