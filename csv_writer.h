@@ -7,40 +7,17 @@
 #include <ostream>
 #include <string>
 
-
 namespace csv_writer {
 namespace internal {
 
-template <class T, class... Args>
-struct WriteImpl {
-  void write(std::ostream* os, const std::string& sep, const T& value,
-             const Args&... args) {
-    *os << value << sep;
-
-    WriteImpl<Args...>::write(os, sep, args...);
-  }
-};
-
-
 template <class T>
-struct WriteImpl<T> {
-  void write(std::ostream* os, const std::string& sep, const T& value) {
-    *os << value << std::endl;
-  }
-};
-
-template <class T, class... Args>
-std::enable_if<(sizeof...(Args) == 0), void> write_impl(std::ostream* os,
-                                                        const std::string& sep,
-                                                        const T& value) {
+void write_impl(std::ostream* os, const std::string& sep, const T& value) {
   *os << value << std::endl;
 }
 
 template <class T, class... Args>
-std::enable_if<(sizeof...(Args) > 0), void> write_impl(std::ostream* os,
-                                                       const std::string& sep,
-                                                       const T& value,
-                                                       const Args&... args) {
+void write_impl(std::ostream* os, const std::string& sep, const T& value,
+                const Args&... args) {
   *os << value << sep;
   write_impl<Args...>(os, sep, args...);
 }
@@ -81,9 +58,7 @@ class CSVWriter {
   template <class... Args>
   void write(const std::tuple<Args...>& tup);
 
-  void flush() {
-    os_->flush();
-  }
+  void flush() { os_->flush(); }
 
  private:
   std::ostream* os_;
